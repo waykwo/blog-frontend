@@ -1,7 +1,7 @@
 import { PostsIndex } from "./PostsIndex";
 import { PostsNew } from "./PostsNew";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function PostPage() {
   const [posts, setPosts] = useState([]);
@@ -13,11 +13,12 @@ export function PostPage() {
     })
   )
   
+  useEffect(handleIndex, []);
 
   return (
     <main>
       <PostsNew />
-      <PostsIndex name={name} posts={posts} />
+      <PostsIndex posts={posts} />
       <button onClick={handleIndex}>Get the data</button>
     </main>
 
