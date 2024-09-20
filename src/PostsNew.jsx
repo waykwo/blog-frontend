@@ -1,23 +1,28 @@
-export function PostsNew() {
+export function PostsNew(props) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const params = new FormData(event.target);
+    props.onCreatePost(params, () => event.target.reset());
+  }
   return (
     <div id="posts-new">
       <h1>New post</h1>
-      <form action="/my-handling-form-page" method="post">
+      <form onSubmit={handleSubmit}>
         <ul>
           <li>
             <label>Title:</label>
-            <input type="text" id="name" name="user_name" />
+            <input type="text" name="title" />
           </li>
           <li>
             <label>Body:</label>
-            <textarea id="msg" name="user_message"></textarea>
+            <textarea id="msg" name="body"></textarea>
           </li>
           <li>
             <label>Image:</label>
-            <input type="img" id="img" name="user_image" />
+            <input type="img" name="image" />
           </li>
         </ul>
-        <button type="submit" href="/">Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );

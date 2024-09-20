@@ -7,16 +7,45 @@ import { Modal } from "./Modal";
 export function PostPage() {
   const [posts, setPosts] = useState([]);
   const [IsPostsShowVisible, setIsPostsShowVisible] = useState(false);
+  const [currentPost, setCurrentPost] = useState();
 
   const handleIndex = () => {
     axios.get("http://localhost:3000/posts.json").then(response => {
-      console.log(response.data);
+      // console.log(response.data);
       setPosts(response.data);
     });
   };
+
+  const handleShowPost = () => {
+    axios.get("http://localhost:3000/posts/1.json").then(response => {
+      console.log(response.data);
+      // setPosts(response.data);
+    });
+  };
+
+  // const handleCreate = () => {
+  //   axios.post("http://localhost:3000/posts.json", {
+  //     title: 'An even even even better Test title from handleCreate',
+  //     body: 'This is still still a test'
+  //   }).then((response) => {
+  //     console.log(response.data);
+  //   });
+  // };
+
+  const handleCreate = (params, successCallback) => {
+    axios.post("http://localhost:3000/posts.json", params).then((response) => {
+      console.log(response.data);
+      setPosts([...posts, response.data]);
+      successCallback();
+    });
+  };
+
+
   
-  const handleShow = () => {
+  const handleShow = (post) => {
     setIsPostsShowVisible(true);
+    setCurrentPost(post);
+    console.log(currentPost)
   };
     
   const handleClose = () => {
@@ -27,12 +56,15 @@ export function PostPage() {
 
   return (
     <main>
-      <PostsNew />
+      {/* <button onClick={handleIndex}>Get the data</button> */}
+      <button onClick={handleShowPost}>Get 1 post</button>
+      <button onClick={handleCreate}>Create</button>
+      <PostsNew onCreatePost={handleCreate}/>
       <PostsIndex posts={posts} onShow={handleShow} />
       <Modal show={IsPostsShowVisible} onClose={handleClose}>
-        <p>TEST</p>
+        {/* <h2>Title: {currentPost.title}</h2>
+        <p>Body: {currentPost.body}</p> */}
       </Modal>
-      <button onClick={handleIndex}>Get the data</button>
     </main>
 
   );
