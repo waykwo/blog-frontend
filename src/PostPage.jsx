@@ -32,13 +32,23 @@ export function PostPage() {
   //   });
   // };
 
-  const handleCreate = (params, successCallback) => {
-    axios.post("http://localhost:3000/posts.json", params).then((response) => {
+  const handleCreate = (params) => {
+    console.log('handling create');
+    axios.post("http://localhost:3000/posts.json", params).then(response => {
       console.log(response.data);
-      setPosts([...posts, response.data]);
-      successCallback();
+
+      setPosts([...posts, response.data]) // copies the original array and then adds response.data
     });
   };
+
+  // Brad's code:
+  // const handleCreate = (params, successCallback) => {
+  //   axios.post("http://localhost:3000/posts.json", params).then((response) => {
+  //     console.log(response.data);
+  //     setPosts([...posts, response.data]);
+  //     successCallback();
+  //   });
+  // };
 
 
   
@@ -59,7 +69,7 @@ export function PostPage() {
       {/* <button onClick={handleIndex}>Get the data</button> */}
       <button onClick={handleShowPost}>Get 1 post</button>
       <button onClick={handleCreate}>Create</button>
-      <PostsNew onCreatePost={handleCreate}/>
+      <PostsNew onCreate={handleCreate}/>
       <PostsIndex posts={posts} onShow={handleShow} />
       <Modal show={IsPostsShowVisible} onClose={handleClose}>
         {/* <h2>Title: {currentPost.title}</h2>

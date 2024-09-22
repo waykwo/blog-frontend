@@ -1,19 +1,30 @@
-import axios from 'axios';
+// import axios from 'axios';
 
-export function PostsNew() {
+export function PostsNew(props) {
   const handleSubmit = (event) => {
-    event.preventDefault();
-    // get params from form
-    const params = new FormData(event.target);
-    // make web request to rails
-    axios.post("http://localhost:3000/posts.json", params).then(response => {
-      console.log(response.data);
-      event.target.reset();
-    });
-    // make sure to send params in web request
-    console.log('handling submit');
-  };
+    event.preventDefault(); // prevents HTML reloading
+    const params = new FormData(event.target); // Defining params using React way of getting the form data
+    props.onCreate(params); // 
+    event.target.reset(); // clears the form
+  }
 
+
+// export function PostsNew() {
+//   const handleSubmit = (event) => {
+//     event.preventDefault();
+//     // get params from form
+//     const params = new FormData(event.target);
+//     // make web request to rails
+//     axios.post("http://localhost:3000/posts.json", params).then(response => {
+//       console.log(response.data);
+//       event.target.reset();
+//     });
+//     // make sure to send params in web request
+//     console.log('handling submit');
+//   };
+
+
+// Brad's code:
   // export function PostsNew(props) {
 //   const handleSubmit = (event) => {
 //     event.preventDefault();
